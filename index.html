@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My App Deeplink</title>
+
+    <!-- Open Graph tags (Facebook share) -->
+    <meta property="og:type" content="website" />
+    <meta property="fb:app_id" content="1971997096985297" />
+    <meta property="og:title" content="My App Deeplink" />
+    <meta property="og:description" content="Click to open My App directly." />
+    <meta property="og:url" content="https://dekultug.github.io/host_deeplink_meta/index.html" />
+    <meta property="og:image" content="https://maunaildep.com/wp-content/uploads/2025/04/gai-xinh-2k11-1.jpg" />
+
+    <!-- Facebook App Links meta -->
+    <meta property="al:android:package" content="com.shorthub.drama.pop" />
+    <meta property="al:android:class" content="com.shorthub.drama.pop.presentation.main.MainActivity" />
+    <meta property="al:android:url" content="apptest://facebookhost.com/deeplink" />
+    <meta property="al:android:app_name" content="My App Short" />
+    <meta property="al:web:url" content="https://play.google.com/store/apps/details?id=com.shorthub.drama.pop" />
+    <meta property="al:web:should_fallback" content="true" />
+
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Deeplink Page for My App</h1>
+    <p>If your app is installed, you will be redirected automatically.</p>
+    <p>If not, you will be redirected to Google Play Store (test app).</p>
+
+    <script>
+        (function() {
+            // Ngăn lặp vô hạn nếu trang reload
+            if (sessionStorage.getItem('deeplinkRedirected')) return;
+            sessionStorage.setItem('deeplinkRedirected', 'true');
+
+            const appScheme = "apptest://facebookhost.com/deeplink"; // scheme custom app
+            const fallbackURL = "https://play.google.com/store/apps/details?id=com.shorthub.drama.pop"; // test app khác trên Play Store
+            const startTime = Date.now();
+
+            // Thử mở app
+            window.location = appScheme;
+
+            // Nếu app chưa mở sau 1.5s, redirect sang Play Store
+            setTimeout(function() {
+                const now = Date.now();
+                if (now - startTime < 2000) {
+                    window.location = fallbackURL;
+                }
+            }, 1500);
+        })();
+    </script>
+</body>
+</html>
